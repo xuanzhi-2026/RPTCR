@@ -1,5 +1,7 @@
 # Source provenance
 
+[Back to README](../README.md)
+
 The paths below identify the original sources; they are not required at runtime. The original experiment files are not bundled.
 
 | Packaged file | Original source | SHA-256 of original source | Extraction |
@@ -13,4 +15,6 @@ The two original source locks were independently verified during the method audi
 
 External implementation versions: OpenOCR `0d522801ec6dc1df852c6b6d4ed6a08f5127ed97`; PIMNet `d4b1e39670b1cd7679e6f5a5364a340575d9bc4b`. Obtain their source and checkpoints separately under the upstream licenses; this package grants no additional third-party rights.
 
-The API wrappers and synthetic tests were organized for this package. Packaging did not include training, real-image inference or a new model-checkpoint parity run. The 2026-09-20 documentation edits preserve the MDiff file byte for byte and leave PIMNet arithmetic unchanged.
+The API wrappers and synthetic tests were organized for this package. Packaging did not include training, real-image inference or a new model-checkpoint parity run. The 2026-09-20 documentation edits preserved the MDiff file byte for byte and left PIMNet arithmetic unchanged.
+
+For integration, see the [MDiff4STR guide](mdiff4str.md) and [PIMNet guide](pimnet.md). The [validation record](validation.md) describes the checks performed.
