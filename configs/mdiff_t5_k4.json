@@ -1,0 +1,14 @@
+{
+  "model": "MDiff4STR-B",
+  "native_steps_requested": 5,
+  "native_early_exit": "preserve upstream behavior",
+  "readout_mode": "K4",
+  "views": 4,
+  "tau": 0.8817490935325623,
+  "slots": 26,
+  "output_classes": 95,
+  "mask_id": 95,
+  "eos_id": 0,
+  "upstream_commit": "0d522801ec6dc1df852c6b6d4ed6a08f5127ed97",
+  "terminal_input": "complete probabilities of the final native round actually executed"
+}
