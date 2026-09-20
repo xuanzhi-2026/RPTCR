@@ -1,0 +1,13 @@
+{
+  "model": "PIMNet",
+  "native_steps": 5,
+  "native_early_exit": false,
+  "views": 5,
+  "tau": 1.404470682144165,
+  "slots": 25,
+  "output_classes": 38,
+  "mask_id": 36,
+  "eos_id": 37,
+  "upstream_commit": "d4b1e39670b1cd7679e6f5a5364a340575d9bc4b",
+  "terminal_input": "native terminal token IDs and cached visual features"
+}
