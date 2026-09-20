@@ -1,5 +1,7 @@
 # Packaging validation
 
+[Back to README](../README.md)
+
 Validation covers source extraction and synthetic software behavior. No benchmark was run.
 
 ## Original checks: 2026-09-07
@@ -20,8 +22,10 @@ Validation covers source extraction and synthetic software behavior. No benchmar
 | --- | --- |
 | Synthetic unit suite | 11 tests passed; 3 PyTorch-dependent tests were skipped because PyTorch was not installed |
 | Illustrative example | Passed using synthetic logits |
+| Documentation reorganization | All 44 relative links resolve; the three Python API snippets parse successfully |
+| Source preservation after reorganization | Code, configurations, examples, and tests are byte-identical to the preceding revision |
 
-This rerun covers the tests available in the local environment. The three skipped tests were included in the complete 2026-09-07 run above.
+The three skipped tests were included in the complete 2026-09-07 run above.
 
 ## Coverage and limits
 
@@ -29,4 +33,4 @@ The suite covers first EOS, repeated EOS, EOS at the last slot, no EOS, strict t
 
 The arithmetic comparison ran original PIM function definitions extracted through Python AST, bypassing the experiment modules' import-time environment changes and file handling. It checked extraction consistency on synthetic inputs in one NumPy runtime. Numerical equality across NumPy or TensorFlow versions was not tested.
 
-The TensorFlow/PIMNet graph factory was checked statically against the source graph construction. TensorFlow 1.12.0 and real checkpoints were not loaded. The package omits the MDiff native trajectory bridge, and real-model, target-CUDA and complete-dataset parity remain untested. Integration requires the external model and input interfaces documented in the README.
+The TensorFlow/PIMNet graph factory was checked statically against the source graph construction. TensorFlow 1.12.0 and real checkpoints were not loaded. The package omits the MDiff native trajectory bridge, and real-model, target-CUDA and complete-dataset parity remain untested. Integration requires the external model and input interfaces documented in the [MDiff4STR guide](mdiff4str.md) and [PIMNet guide](pimnet.md).
