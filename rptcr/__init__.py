@@ -1,7 +1,6 @@
 """Residue-Partitioned Terminal Cloze Revision.
 
-Backend modules are imported explicitly so the legacy PIMNet environment does
-not import PyTorch or Python-3.7-only MDiff declarations.
+Import backend modules separately to support PIMNet's Python 3.6 environment.
 """
 
 __version__ = '0.1.0'

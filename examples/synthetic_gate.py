@@ -1,8 +1,8 @@
-"""A tiny acceptance example. No image, model, checkpoint or dataset needed."""
+"""Show selective revision for two positions using synthetic logits."""
 import numpy as np
 from rptcr.pimnet import apply_arm
 
-# Constructed logits: slot 0 supports replacement; slot 1 does not.
+# Only the first position exceeds the edit threshold.
 base = np.array([[0, 0]], dtype=np.int32)
 active = np.array([[True, True]])
 logits = np.array([[[0.0, 3.0], [0.0, 0.5]]], dtype=np.float32)

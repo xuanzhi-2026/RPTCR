@@ -1,8 +1,6 @@
-"""Optional PIMNet TensorFlow-1 graph adapter, with external model code.
+"""TensorFlow 1 graph adapter for PIMNet verification.
 
-No TensorFlow or PIMNet import, environment mutation, file discovery or model
-download occurs at import time. Callers provide the original TensorFlow module
-and a factory returning a native PIMNet Model configured for inference.
+The caller supplies TensorFlow and a factory for the upstream PIMNet model.
 """
 from .pimnet import T
 
@@ -18,11 +16,11 @@ class Capture(object):
 
 
 def build_graph(tf, model_factory, seed=20260905):
-    """Build the source-locked T5 native path and shared terminal reread.
+    """Build five-step native decoding and verification with shared weights.
 
     model_factory(num_iter) must construct the upstream Model with its official
     LOWERCASE vocabulary/configuration, seq_len=25, and is_training=False.
-    It is called inside the new graph. Typo `resue` is the upstream API spelling.
+    It is called inside the new graph. `resue` is the upstream API spelling.
     """
     graph = tf.Graph()
     with graph.as_default():
@@ -55,7 +53,7 @@ def build_graph(tf, model_factory, seed=20260905):
 
 
 def open_session(tf, graph, checkpoint):
-    """Restore an explicitly supplied checkpoint using the evaluated CPU setup."""
+    """Restore the EMA checkpoint in a CPU session."""
     config = tf.ConfigProto(allow_soft_placement=False, device_count={'GPU': 0},
                             intra_op_parallelism_threads=2,
                             inter_op_parallelism_threads=1)
