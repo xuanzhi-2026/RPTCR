@@ -1,7 +1,7 @@
-"""PIMNet revision primitives extracted from the frozen evaluation code.
+"""RPTCR revision for PIMNet.
 
-Compatible with the Python 3.6 / NumPy 1.16 execution environment. TensorFlow
-and the original PIMNet graph are supplied by the caller, never imported here.
+Uses NumPy and supports Python 3.6. The caller supplies the TensorFlow session
+and PIMNet graph handles.
 """
 import numpy as np
 
@@ -25,7 +25,7 @@ def prepare(base, mask_id=MASK_ID, eos_id=EOS_ID):
 
 
 def log_prob(logits):
-    """Preserve the original float32 log-softmax arithmetic."""
+    """Compute log-softmax in float32."""
     logits = np.asarray(logits, dtype=np.float32)
     shifted = logits - logits.max(-1, keepdims=True)
     return shifted - np.log(np.exp(shifted).sum(-1, keepdims=True))
@@ -52,11 +52,10 @@ def selected_for_k(sess, graph, prepared, active, features, k=K,
 
 
 def apply_arm(base, active, logits, tau=TAU):
-    """Return token IDs and diagnostics; string decoding stays upstream.
+    """Accept candidates whose log-probability gain exceeds tau.
 
-    The arithmetic and edit condition match the frozen cross-domain evaluator.
-    This function deliberately does not replace the incumbent with a prepared
-    MASK token when a proposal is rejected.
+    Rejected candidates retain the original token from base, not the masked
+    feedback token. Return revised IDs and per-position diagnostics.
     """
     selected = log_prob(logits)
     candidate = selected.argmax(-1)
@@ -73,10 +72,10 @@ def apply_arm(base, active, logits, tau=TAU):
 
 
 def revise(sess, graph, base, features, tau=TAU):
-    """Apply the frozen T5/K5 postprocessor to externally obtained T5 state.
+    """Revise the final PIMNet sequence using five masked views.
 
-    base is [1,25]. features is the visual tensor cached during that same
-    native call. This function performs five decoder rereads and one update.
+    base contains integer IDs of shape [1, 25] after five native decoding
+    steps. features is the visual tensor cached during the same call.
     """
     base = np.asarray(base)
     if base.shape != (1, SLOTS) or base.dtype.kind not in 'iu':

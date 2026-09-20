@@ -4,7 +4,7 @@ from rptcr import pimnet
 
 
 class RecordingSession(object):
-    """Return distinct per-view proposals and record the exact feedback input."""
+    """Return a different candidate for each view and record its inputs."""
     def __init__(self):
         self.views = []
         self.feature_objects = []
@@ -52,7 +52,7 @@ class PIMNetTests(unittest.TestCase):
         logits = np.array([[[0, 3], [0, 1], [0, 8]]], dtype=np.float32)
         result = pimnet.apply_arm(base, active, logits, tau=2)
         np.testing.assert_array_equal(result['output_ids'], [[1, 0, 0]])
-        # Exactly equal support must KEEP; a strictly lower threshold must EDIT.
+        # A gain equal to the threshold keeps the token; a larger gain replaces it.
         tie = float(result['gain'][0, 0])
         self.assertFalse(pimnet.apply_arm(base, active, logits, tau=tie)['edits'][0, 0])
         lower = np.nextafter(np.float32(tie), np.float32(-np.inf))
